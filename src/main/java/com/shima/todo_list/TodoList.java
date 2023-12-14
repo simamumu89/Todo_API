@@ -6,11 +6,11 @@ public class TodoList {
 
     private int id;
     private String name;
-    private int start_date;
+    private LocalDate start_date;
     private LocalDate scheduled_end_date;
     private LocalDate actual_end_date;
 
-    public TodoList(int id, String name, int start_date, LocalDate scheduled_end_date, LocalDate actual_end_date) {
+    public TodoList(int id, String name, LocalDate start_date, LocalDate scheduled_end_date, LocalDate actual_end_date) {
         this.id = id;
         this.name = name;
         this.start_date = start_date;
@@ -26,7 +26,7 @@ public class TodoList {
         return name;
     }
 
-    public int getStart_date() {
+    public LocalDate getStart_date() {
         return start_date;
     }
 
