@@ -3,6 +3,7 @@ package com.shima.todo_list;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TodoListService {
@@ -16,5 +17,14 @@ public class TodoListService {
     public List<TodoList> getTodoList() {
         List<TodoList> todoLists = todoListMapper.findAll();
         return todoLists;
+    }
+
+    public TodoList findById(int id) {
+        Optional<TodoList> todoList = this.todoListMapper.findById(id);
+        if (todoList.isPresent()) {
+            return todoList.get();
+        } else {
+            throw new UserNotFoundException("task not found");
+        }
     }
 }
