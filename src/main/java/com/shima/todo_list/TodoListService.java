@@ -11,6 +11,7 @@ public class TodoListService {
     private final TodoListMapper todoListMapper;
 
     public TodoListService(TodoListMapper todoListMapper) {
+
         this.todoListMapper = todoListMapper;
     }
 
@@ -24,7 +25,7 @@ public class TodoListService {
         if (todoList.isPresent()) {
             return todoList.get();
         } else {
-            throw new UserNotFoundException("task not found");
+            throw new TaskNotFoundException("task not found");
         }
     }
 }
