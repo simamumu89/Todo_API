@@ -1,4 +1,4 @@
-package com.shima.todo_list;
+package com.shima.todo_list.entity;
 
 import java.time.LocalDate;
 
