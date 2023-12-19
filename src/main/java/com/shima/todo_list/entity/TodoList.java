@@ -10,8 +10,18 @@ public class TodoList {
     private LocalDate scheduled_end_date;
     private LocalDate actual_end_date;
 
+
+    //GET(全件取得と指定ID）のConstructor
     public TodoList(int id, String name, LocalDate start_date, LocalDate scheduled_end_date, LocalDate actual_end_date) {
         this.id = id;
+        this.name = name;
+        this.start_date = start_date;
+        this.scheduled_end_date = scheduled_end_date;
+        this.actual_end_date = actual_end_date;
+    }
+
+    //Post(新規登録処理）のConstructor
+    public TodoList(String name, LocalDate start_date, LocalDate scheduled_end_date, LocalDate actual_end_date) {
         this.name = name;
         this.start_date = start_date;
         this.scheduled_end_date = scheduled_end_date;

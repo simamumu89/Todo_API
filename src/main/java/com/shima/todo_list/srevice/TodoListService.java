@@ -5,6 +5,7 @@ import com.shima.todo_list.foundexception.TaskNotFoundException;
 import com.shima.todo_list.mapper.TodoListMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,11 +19,13 @@ public class TodoListService {
         this.todoListMapper = todoListMapper;
     }
 
+    //GET(全件取得)
     public List<TodoList> getTodoList() {
         List<TodoList> todoLists = todoListMapper.findAll();
         return todoLists;
     }
 
+    //GET(指定id)と例外処理
     public TodoList findById(int id) {
         Optional<TodoList> todoList = this.todoListMapper.findById(id);
         if (todoList.isPresent()) {
@@ -30,5 +33,12 @@ public class TodoListService {
         } else {
             throw new TaskNotFoundException("task not found");
         }
+    }
+
+    //Post(新規追加登録処理）
+    public TodoList insert(String name, LocalDate start_date, LocalDate scheduled_end_date, LocalDate actual_end_date) {
+        TodoList todoList = new TodoList(name, start_date, scheduled_end_date, actual_end_date);
+        todoListMapper.insert(todoList);
+        return todoList;
     }
 }
