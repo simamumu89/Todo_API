@@ -1,10 +1,14 @@
 package com.shima.todo_list;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 
 public class CreateRequest {
 
+    @NotNull
     private String name;
+    @NotNull
     private LocalDate start_date;
     private LocalDate scheduled_end_date;
     private LocalDate actual_end_date;

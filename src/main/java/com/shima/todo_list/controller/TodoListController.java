@@ -4,6 +4,7 @@ import com.shima.todo_list.CreateRequest;
 import com.shima.todo_list.CreateResponse;
 import com.shima.todo_list.entity.TodoList;
 import com.shima.todo_list.srevice.TodoListService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,9 +43,9 @@ public class TodoListController {
     //POST (Create)
     //新規登録(ID追加）
     @PostMapping("/todo_lists")
-    public ResponseEntity<CreateResponse> createTodoList(@RequestBody CreateRequest createRequest, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<CreateResponse> createTodoList(@RequestBody @Valid CreateRequest createRequest, UriComponentsBuilder uriComponentsBuilder) {
         TodoList todoList = todoListService.insert(createRequest.getName(), createRequest.getStart_date(), createRequest.getScheduled_end_date(), createRequest.getActual_end_date());
-        URI uri = uriComponentsBuilder.path("/todo_lists/{id}").buildAndExpand(todoList.getId().toUri());
+        URI uri = uriComponentsBuilder.path("/todo_lists/{id}").buildAndExpand(todoList.getId()).toUri();
         return ResponseEntity.created(uri).body(new CreateResponse("Add new task"));
     }
 }
