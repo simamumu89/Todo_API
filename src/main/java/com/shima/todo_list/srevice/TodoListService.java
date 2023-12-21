@@ -45,7 +45,7 @@ public class TodoListService {
         if (isNamePresent) {
             throw new NameAlreadyExistsException("Already registered data");
         }
-        // addressがすでに存在するかどうかのチェック
+        //Start_Dateがすでに存在するかどうかのチェック
         boolean isStartDatePresent = this.todoListMapper.findByStart_Date(start_date).isPresent();
         if (isStartDatePresent) {
             throw new StartDateAlreadyExistsException("Already registered data");

@@ -66,7 +66,7 @@ public class ThrowExceptionController {
 
     //Start_Dateが既に登録されている場合
     @ExceptionHandler(value = StartDateAlreadyExistsException.class)
-    public ResponseEntity<Map<String, String>> handleStart_DateAlreadyExistsException(
+    public ResponseEntity<Map<String, String>> handleStartDateAlreadyExistsException(
             StartDateAlreadyExistsException e, HttpServletRequest request) {
         Map<String, String> body = Map.of(
                 "timestamp", ZonedDateTime.now().toString(),
