@@ -54,4 +54,13 @@ public class TodoListService {
         todoListMapper.insert(todoList);
         return todoList;
     }
+
+    //PATCH(既存DBの部分更新）
+    public void update(int id, LocalDate scheduled_end_date, LocalDate actual_end_date) {
+        //指定したIDを返す　
+        todoListMapper.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException("task not found"));
+        TodoList todoList = new TodoList(id, scheduled_end_date, actual_end_date);
+        todoListMapper.update(todoList);
+    }
 }

@@ -2,11 +2,14 @@ package com.shima.todo_list.controller;
 
 import com.shima.todo_list.CreateRequest;
 import com.shima.todo_list.CreateResponse;
+import com.shima.todo_list.UpdateRequest;
+import com.shima.todo_list.UpdateResponse;
 import com.shima.todo_list.entity.TodoList;
 import com.shima.todo_list.srevice.TodoListService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,5 +50,14 @@ public class TodoListController {
         TodoList todoList = todoListService.insert(createRequest.getName(), createRequest.getStart_date(), createRequest.getScheduled_end_date(), createRequest.getActual_end_date());
         URI uri = uriComponentsBuilder.path("/todo_lists/{id}").buildAndExpand(todoList.getId()).toUri();
         return ResponseEntity.created(uri).body(new CreateResponse("Add new task"));
+    }
+
+    //PATCH (Update)
+    //既存DBの情報を更新　Validation追加
+    @PatchMapping("/todo_lists/{id}")
+    public ResponseEntity<UpdateResponse> updateTodoList(@PathVariable int id, @RequestBody UpdateRequest updateRequest) {
+        todoListService.update(id, updateRequest.getScheduled_end_date(), updateRequest.getActual_end_date());
+        UpdateResponse updateResponse = new UpdateResponse("Update completed!");
+        return ResponseEntity.ok(updateResponse);
     }
 }

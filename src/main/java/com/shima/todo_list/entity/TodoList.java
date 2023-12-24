@@ -27,6 +27,13 @@ public class TodoList {
         this.scheduled_end_date = scheduled_end_date;
         this.actual_end_date = actual_end_date;
     }
+    
+    //PATCH(既存DBの更新)のUpdateResponseのConstructor
+    public TodoList(int id, LocalDate scheduled_end_date, LocalDate actual_end_date) {
+        this.id = id;
+        this.scheduled_end_date = scheduled_end_date;
+        this.actual_end_date = actual_end_date;
+    }
 
     public int getId() {
         return id;

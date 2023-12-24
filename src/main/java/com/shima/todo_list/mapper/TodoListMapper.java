@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,4 +35,10 @@ public interface TodoListMapper {
     //POST Validation2
     @Select("SELECT * FROM todo_lists WHERE start_date = #{start_date}")
     Optional<TodoList> findByStart_Date(LocalDate start_date);
+
+    
+    //PATCH (既存DBの部分更新）
+    @Update("UPDATE todo_lists SET scheduled_end_date = #{scheduled_end_date}, actual_end_date = #{actual_end_date} WHERE id = #{id}")
+    void update(TodoList todoList);
+
 }
