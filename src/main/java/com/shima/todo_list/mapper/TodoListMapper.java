@@ -24,7 +24,7 @@ public interface TodoListMapper {
     Optional<TodoList> findById(int id);
 
     //POST処理 (新規追加登録処理)
-    @Insert("INSERT INTO todo_lists (name, startDate, scheduledEndDate, actualEndDate) VALUES (#{name},#{startDate},#{scheduledEndDate}, #{actualEndDate})")
+    @Insert("INSERT INTO todo_lists (name, start_date, scheduled_end_date, actual_end_date) VALUES (#{name},#{startDate},#{scheduledEndDate}, #{actualEndDate})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(TodoList todoList);
 
@@ -38,7 +38,7 @@ public interface TodoListMapper {
 
 
     //PATCH (既存DBの部分更新）
-    @Update("UPDATE todo_lists SET scheduledEndDate = #{scheduledEndDate}, actualEndDate = #{actualEndDate} WHERE id = #{id}")
+    @Update("UPDATE todo_lists SET scheduled_end_date = #{scheduledEndDate}, actual_end_date = #{actualEndDate} WHERE id = #{id}")
     void update(TodoList todoList);
 
 }
