@@ -39,28 +39,28 @@ public class TodoListService {
 
 
     //Post(新規追加登録処理）
-    public TodoList insert(String name, LocalDate start_date, LocalDate scheduled_end_date, LocalDate actual_end_date) {
+    public TodoList insert(String name, LocalDate startDate, LocalDate scheduledEndDate, LocalDate actualEndDate) {
         // nameがすでに存在するかどうかのチェック
         boolean isNamePresent = this.todoListMapper.findByName(name).isPresent();
         if (isNamePresent) {
             throw new NameAlreadyExistsException("Already registered data");
         }
         //Start_Dateがすでに存在するかどうかのチェック
-        boolean isStartDatePresent = this.todoListMapper.findByStart_Date(start_date).isPresent();
+        boolean isStartDatePresent = this.todoListMapper.findByStartDate(startDate).isPresent();
         if (isStartDatePresent) {
             throw new StartDateAlreadyExistsException("Already registered data");
         }
-        TodoList todoList = new TodoList(name, start_date, scheduled_end_date, actual_end_date);
+        TodoList todoList = new TodoList(name, startDate, scheduledEndDate, actualEndDate);
         todoListMapper.insert(todoList);
         return todoList;
     }
 
     //PATCH(既存DBの部分更新）
-    public void update(int id, LocalDate scheduled_end_date, LocalDate actual_end_date) {
+    public void update(int id, LocalDate scheduledEndDate, LocalDate actualEndDate) {
         //指定したIDを返す　
         todoListMapper.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException("task not found"));
-        TodoList todoList = new TodoList(id, scheduled_end_date, actual_end_date);
+        TodoList todoList = new TodoList(id, scheduledEndDate, actualEndDate);
         todoListMapper.update(todoList);
     }
 }

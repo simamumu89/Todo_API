@@ -47,7 +47,7 @@ public class TodoListController {
     //新規登録(ID追加）
     @PostMapping("/todo_lists")
     public ResponseEntity<CreateResponse> createTodoList(@RequestBody @Valid CreateRequest createRequest, UriComponentsBuilder uriComponentsBuilder) {
-        TodoList todoList = todoListService.insert(createRequest.getName(), createRequest.getStart_date(), createRequest.getScheduled_end_date(), createRequest.getActual_end_date());
+        TodoList todoList = todoListService.insert(createRequest.getName(), createRequest.getStartDate(), createRequest.getScheduledEndDate(), createRequest.getActualEndDate());
         URI uri = uriComponentsBuilder.path("/todo_lists/{id}").buildAndExpand(todoList.getId()).toUri();
         return ResponseEntity.created(uri).body(new CreateResponse("Add new task"));
     }
@@ -56,7 +56,7 @@ public class TodoListController {
     //既存DBの情報を更新　Validation追加
     @PatchMapping("/todo_lists/{id}")
     public ResponseEntity<UpdateResponse> updateTodoList(@PathVariable int id, @RequestBody UpdateRequest updateRequest) {
-        todoListService.update(id, updateRequest.getScheduled_end_date(), updateRequest.getActual_end_date());
+        todoListService.update(id, updateRequest.getScheduledEndDate(), updateRequest.getActualEndDate());
         UpdateResponse updateResponse = new UpdateResponse("Update completed!");
         return ResponseEntity.ok(updateResponse);
     }
