@@ -2,8 +2,8 @@ DROP TABLE IF EXISTS todo_lists;
 
 CREATE TABLE todo_lists (
  id int unsigned AUTO_INCREMENT,
- name VARCHAR(255) NOT NULL,
- start_date DATE NOT NULL,
+ name VARCHAR(255) NOT NULL UNIQUE,
+ start_date DATE NOT NULL UNIQUE,
  scheduled_end_date DATE,
  actual_end_date DATE,
  PRIMARY KEY(id)
