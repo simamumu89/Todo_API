@@ -1,7 +1,5 @@
 package com.shima.todo_list.srevice;
 
-import com.shima.todo_list.NameAlreadyExistsException;
-import com.shima.todo_list.StartDateAlreadyExistsException;
 import com.shima.todo_list.entity.TodoList;
 import com.shima.todo_list.foundexception.TaskNotFoundException;
 import com.shima.todo_list.mapper.TodoListMapper;
@@ -40,16 +38,6 @@ public class TodoListService {
 
     //Post(新規追加登録処理）
     public TodoList insert(String name, LocalDate startDate, LocalDate scheduledEndDate, LocalDate actualEndDate) {
-        // nameがすでに存在するかどうかのチェック
-        boolean isNamePresent = this.todoListMapper.findByName(name).isPresent();
-        if (isNamePresent) {
-            throw new NameAlreadyExistsException("Already registered data");
-        }
-        //Start_Dateがすでに存在するかどうかのチェック
-        boolean isStartDatePresent = this.todoListMapper.findByStartDate(startDate).isPresent();
-        if (isStartDatePresent) {
-            throw new StartDateAlreadyExistsException("Already registered data");
-        }
         TodoList todoList = new TodoList(name, startDate, scheduledEndDate, actualEndDate);
         todoListMapper.insert(todoList);
         return todoList;

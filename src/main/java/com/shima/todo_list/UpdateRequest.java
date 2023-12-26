@@ -4,19 +4,19 @@ import java.time.LocalDate;
 
 public class UpdateRequest {
 
-    private LocalDate ScheduledEndDate;
-    private LocalDate ActualEndDate;
+    private LocalDate scheduledEndDate;
+    private LocalDate actualEndDate;
 
     public UpdateRequest(LocalDate scheduledEndDate, LocalDate actualEndDate) {
-        ScheduledEndDate = scheduledEndDate;
-        ActualEndDate = actualEndDate;
+        this.scheduledEndDate = scheduledEndDate;
+        this.actualEndDate = actualEndDate;
     }
 
     public LocalDate getScheduledEndDate() {
-        return ScheduledEndDate;
+        return scheduledEndDate;
     }
 
     public LocalDate getActualEndDate() {
-        return ActualEndDate;
+        return actualEndDate;
     }
 }
