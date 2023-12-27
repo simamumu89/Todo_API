@@ -1,4 +1,4 @@
-package com.shima.todo_list;
+package com.shima.todo_list.controller.request;
 
 import jakarta.validation.constraints.NotNull;
 

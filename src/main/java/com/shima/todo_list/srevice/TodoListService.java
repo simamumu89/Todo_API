@@ -1,7 +1,7 @@
 package com.shima.todo_list.srevice;
 
 import com.shima.todo_list.entity.TodoList;
-import com.shima.todo_list.foundexception.TaskNotFoundException;
+import com.shima.todo_list.existsexception.TaskNotFoundException;
 import com.shima.todo_list.mapper.TodoListMapper;
 import org.springframework.stereotype.Service;
 
@@ -50,5 +50,12 @@ public class TodoListService {
                 .orElseThrow(() -> new TaskNotFoundException("task not found"));
         TodoList todoList = new TodoList(id, scheduledEndDate, actualEndDate);
         todoListMapper.update(todoList);
+    }
+
+    //DELETE(指定したid削除）
+    public void delete(int id) {
+        todoListMapper.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException("Task information not found"));
+        todoListMapper.delete(id);
     }
 }
