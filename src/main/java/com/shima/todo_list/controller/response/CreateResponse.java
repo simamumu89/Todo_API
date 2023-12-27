@@ -1,10 +1,10 @@
-package com.shima.todo_list;
+package com.shima.todo_list.controller.response;
 
-public class UpdateResponse {
+public class CreateResponse {
 
     private String message;
 
-    public UpdateResponse(String message) {
+    public CreateResponse(String message) {
         this.message = message;
     }
 

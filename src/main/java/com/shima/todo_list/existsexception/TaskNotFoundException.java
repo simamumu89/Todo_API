@@ -1,4 +1,4 @@
-package com.shima.todo_list.foundexception;
+package com.shima.todo_list.existsexception;
 
 public class TaskNotFoundException extends RuntimeException {
 

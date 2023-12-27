@@ -1,4 +1,4 @@
-package com.shima.todo_list;
+package com.shima.todo_list.srevice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

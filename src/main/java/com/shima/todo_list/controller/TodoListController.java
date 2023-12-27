@@ -1,13 +1,15 @@
 package com.shima.todo_list.controller;
 
-import com.shima.todo_list.CreateRequest;
-import com.shima.todo_list.CreateResponse;
-import com.shima.todo_list.UpdateRequest;
-import com.shima.todo_list.UpdateResponse;
+import com.shima.todo_list.DeleteResponse;
+import com.shima.todo_list.controller.request.CreateRequest;
+import com.shima.todo_list.controller.request.UpdateRequest;
+import com.shima.todo_list.controller.response.CreateResponse;
+import com.shima.todo_list.controller.response.UpdateResponse;
 import com.shima.todo_list.entity.TodoList;
 import com.shima.todo_list.srevice.TodoListService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,5 +61,14 @@ public class TodoListController {
         todoListService.update(id, updateRequest.getScheduledEndDate(), updateRequest.getActualEndDate());
         UpdateResponse updateResponse = new UpdateResponse("Update completed!");
         return ResponseEntity.ok(updateResponse);
+    }
+
+    //Delete
+    //idで指定した情報削除
+    @DeleteMapping("/todo_lists/{id}")
+    public ResponseEntity<DeleteResponse> deleteTodoList(@PathVariable int id) {
+        todoListService.delete(id);
+        DeleteResponse deleteResponse = new DeleteResponse("Information deleted");
+        return ResponseEntity.ok(deleteResponse);
     }
 }
