@@ -1,4 +1,4 @@
-package com.shima.todo_list.srevice;
+package com.shima.todo_list.service;
 
 import com.shima.todo_list.entity.TodoList;
 import com.shima.todo_list.existsexception.TaskNotFoundException;

@@ -1,12 +1,12 @@
 package com.shima.todo_list.controller;
 
-import com.shima.todo_list.DeleteResponse;
 import com.shima.todo_list.controller.request.CreateRequest;
 import com.shima.todo_list.controller.request.UpdateRequest;
 import com.shima.todo_list.controller.response.CreateResponse;
+import com.shima.todo_list.controller.response.DeleteResponse;
 import com.shima.todo_list.controller.response.UpdateResponse;
 import com.shima.todo_list.entity.TodoList;
-import com.shima.todo_list.srevice.TodoListService;
+import com.shima.todo_list.service.TodoListService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
