@@ -1,8 +1,8 @@
 package com.shima.todo_list.controller;
 
-import com.shima.todo_list.existsexception.NameAlreadyExistsException;
-import com.shima.todo_list.existsexception.StartDateAlreadyExistsException;
-import com.shima.todo_list.existsexception.TaskNotFoundException;
+import com.shima.todo_list.exception.NameAlreadyExistsException;
+import com.shima.todo_list.exception.StartDateAlreadyExistsException;
+import com.shima.todo_list.exception.TaskNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

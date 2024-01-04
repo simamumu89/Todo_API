@@ -1,7 +1,7 @@
 package com.shima.todo_list.service;
 
 import com.shima.todo_list.entity.TodoList;
-import com.shima.todo_list.existsexception.TaskNotFoundException;
+import com.shima.todo_list.exception.TaskNotFoundException;
 import com.shima.todo_list.mapper.TodoListMapper;
 import org.springframework.stereotype.Service;
 

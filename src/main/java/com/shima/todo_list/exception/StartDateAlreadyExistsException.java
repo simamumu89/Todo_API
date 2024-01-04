@@ -1,4 +1,4 @@
-package com.shima.todo_list.existsexception;
+package com.shima.todo_list.exception;
 
 public class StartDateAlreadyExistsException extends RuntimeException {
 
