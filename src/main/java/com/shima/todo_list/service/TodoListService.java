@@ -55,7 +55,7 @@ public class TodoListService {
     //DELETE(指定したid削除）
     public void delete(int id) {
         todoListMapper.findById(id)
-                .orElseThrow(() -> new TaskNotFoundException("Task information not found"));
+                .orElseThrow(() -> new TaskNotFoundException("Task not found"));
         todoListMapper.delete(id);
     }
 }
