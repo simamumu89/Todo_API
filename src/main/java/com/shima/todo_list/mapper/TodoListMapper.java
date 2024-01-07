@@ -1,6 +1,7 @@
 package com.shima.todo_list.mapper;
 
 import com.shima.todo_list.entity.TodoList;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -41,4 +42,7 @@ public interface TodoListMapper {
     @Update("UPDATE todo_lists SET scheduled_end_date = #{scheduledEndDate}, actual_end_date = #{actualEndDate} WHERE id = #{id}")
     void update(TodoList todoList);
 
+    //DELETE(指定したidを削除）
+    @Delete("DELETE FROM todo_lists WHERE id =#{id}")
+    void delete(int id);
 }
