@@ -1,6 +1,7 @@
 package com.shima.todo_list.entity;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class TodoList {
 
@@ -55,5 +56,18 @@ public class TodoList {
 
     public LocalDate getActualEndDate() {
         return actualEndDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TodoList todoList = (TodoList) o;
+        return id == todoList.id && Objects.equals(name, todoList.name) && Objects.equals(startDate, todoList.startDate) && Objects.equals(scheduledEndDate, todoList.scheduledEndDate) && Objects.equals(actualEndDate, todoList.actualEndDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, startDate, scheduledEndDate, actualEndDate);
     }
 }
