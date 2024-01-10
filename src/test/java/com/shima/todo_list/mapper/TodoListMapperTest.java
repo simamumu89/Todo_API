@@ -23,7 +23,7 @@ class TodoListMapperTest {
 
     @Test
     @Sql(
-            scripts = {"classpath:/sqlannotation/delete-todo_lists.sql", "classpath:/sqlannotation/insert-todo_lists.sql"},
+            scripts = {"classpath:/sqlannotation/delete-todolists.sql", "classpath:/sqlannotation/insert-todolists.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
     )
     @Transactional
