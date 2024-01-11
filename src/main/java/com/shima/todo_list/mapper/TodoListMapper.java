@@ -17,7 +17,7 @@ public interface TodoListMapper {
 
     //全DBの情報を取得
     @Select("SELECT * FROM todo_lists")
-    List<TodoList> findAll(); // Entityから受け取る
+    List<TodoList> findAll();
 
 
     //GET　指定したid
