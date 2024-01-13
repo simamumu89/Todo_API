@@ -2,20 +2,21 @@ todo_lists:
   - id: 1
     name: "構想"
     start_date: '2023-12-06'
-    scheduled_end_date: 'null'
-    actual_end_date: 'null'
+    scheduled_end_date: null
+    actual_end_date: null
   - id: 2
     name: "API作成"
     start_date: '2023-12-07'
-    scheduled_end_date: 'null'
-    actual_end_date: 'null'
+    scheduled_end_date: null
+    actual_end_date: null
   - id: 3
     name: "テスト"
     start_date: '2023-12-08'
-    scheduled_end_date: 'null'
-    actual_end_date: 'null'
+    scheduled_end_date: null
+    actual_end_date: null
   - id: 4
     name: "リリース"
     start_date: '2023-12-09'
-    scheduled_end_date: 'null'
-    actual_end_date: 'null'
+    scheduled_end_date: null
+    actual_end_date: null
+
