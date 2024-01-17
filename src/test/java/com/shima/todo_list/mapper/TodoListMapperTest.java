@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -49,6 +50,18 @@ class TodoListMapperTest {
     void 指定したIDのタスク情報を獲得すること() {
         Optional<TodoList> todoLists = todoListMapper.findById(1);
         assertThat(todoLists).contains(new TodoList(1, "構想", LocalDate.of(2023, 12, 6), null, null));
+    }
+
+    @Test
+    @Sql(
+            scripts = {"classpath:/sqlannotation/delete-todolists.sql", "classpath:/sqlannotation/insert-todolists.sql"},
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
+    )
+    //READ機能のDBテスト(指定したIDが存在しない場合)
+    @Transactional
+    void 存在しないIDを指定する場合に空の情報を獲得すること() {
+        Optional<TodoList> todoLists = todoListMapper.findById(5);
+        assertThat(todoLists).isEmpty();
     }
 }
 
