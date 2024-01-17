@@ -50,6 +50,15 @@ class TodoListMapperTest {
         Optional<TodoList> todoLists = todoListMapper.findById(1);
         assertThat(todoLists).contains(new TodoList(1, "構想", LocalDate.of(2023, 12, 6), null, null));
     }
+
+    @Test
+    @DataSet(value = "datasets/todolists.yml")
+    //READ機能のDBテスト(指定したIDが存在しない場合)
+    @Transactional
+    void 存在しないIDを指定する場合に空の情報を獲得すること() {
+        Optional<TodoList> todoLists = todoListMapper.findById(5);
+        assertThat(todoLists).isEmpty();
+    }
 }
 
 
