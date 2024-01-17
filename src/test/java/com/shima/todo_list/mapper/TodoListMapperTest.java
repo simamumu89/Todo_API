@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -53,10 +52,7 @@ class TodoListMapperTest {
     }
 
     @Test
-    @Sql(
-            scripts = {"classpath:/sqlannotation/delete-todolists.sql", "classpath:/sqlannotation/insert-todolists.sql"},
-            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
-    )
+    @DataSet(value = "datasets/todolists.yml")
     //READ機能のDBテスト(指定したIDが存在しない場合)
     @Transactional
     void 存在しないIDを指定する場合に空の情報を獲得すること() {
