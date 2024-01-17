@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -25,7 +24,8 @@ class TodoListMapperTest {
     @Autowired
     TodoListMapper todoListMapper;
 
-    //READ機能のDBテスト
+
+    //READ機能のDBテスト(全件取得)
     @Test
     @DataSet(value = "datasets/todolists.yml")
     @Transactional
@@ -42,10 +42,9 @@ class TodoListMapperTest {
     }
 
     @Test
-    @Sql(
-            scripts = {"classpath:/sqlannotation/delete-todolists.sql", "classpath:/sqlannotation/insert-todolists.sql"},
-            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
-    )
+    @DataSet(value = "datasets/todolists.yml")
+
+    //READ機能のDBテスト(指定したID)
     @Transactional
     void 指定したIDのタスク情報を獲得すること() {
         Optional<TodoList> todoLists = todoListMapper.findById(1);
