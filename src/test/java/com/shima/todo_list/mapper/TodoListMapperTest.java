@@ -73,8 +73,8 @@ class TodoListMapperTest {
     void 新規のタスクを登録すること() {
         TodoList todoList = new TodoList("リリーステスト", LocalDate.of(2023, 12, 10), null, null);
         todoListMapper.insert(todoList);
-        List<TodoList> movies = todoListMapper.findAll();
-        assertThat(movies).hasSize(5)
+        List<TodoList> todoLists = todoListMapper.findAll();
+        assertThat(todoLists).hasSize(5)
                 .contains(
                         new TodoList(1, "構想", LocalDate.of(2023, 12, 6), null, null),
                         new TodoList(2, "API作成", LocalDate.of(2023, 12, 7), null, null),
