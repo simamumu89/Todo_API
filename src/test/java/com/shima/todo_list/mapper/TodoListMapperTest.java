@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -62,40 +61,15 @@ class TodoListMapperTest {
         assertThat(todoLists).isEmpty();
     }
 
-
-    @Test
-    @Sql(
-            scripts = {"classpath:/sqlannotation/delete-todolists.sql", "classpath:/sqlannotation/insert-todolists.sql"},
-            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
-    )
-
-    //CREATE機能のDBテスト
-    @Transactional
-    void 新規のタスクを登録すること() {
-        TodoList todoList = new TodoList("リリーステスト", LocalDate.of(2023, 12, 10), null, null);
-        todoListMapper.insert(todoList);
-        List<TodoList> todoLists = todoListMapper.findAll();
-        assertThat(todoLists).hasSize(5)
-                .contains(
-                        new TodoList(1, "構想", LocalDate.of(2023, 12, 6), null, null),
-                        new TodoList(2, "API作成", LocalDate.of(2023, 12, 7), null, null),
-                        new TodoList(3, "テスト", LocalDate.of(2023, 12, 8), null, null),
-                        new TodoList(4, "リリース", LocalDate.of(2023, 12, 9), null, null),
-                        todoList
-                );
-    }
-
     @Test
     @DataSet(value = "datasets/todolists.yml")
     @ExpectedDataSet(value = "datasets/insert_todolists.yml", ignoreCols = "id")
 
     //CREATE機能のDBテスト(DBRider)
     @Transactional
-    void 新規のタスクを登録することver1() {
+    void 新規のタスクを登録すること() {
         TodoList todoList = new TodoList("承認", LocalDate.of(2023, 12, 10), null, null);
         todoListMapper.insert(todoList);
-        Optional<TodoList> insertMovie = todoListMapper.findById(todoList.getId());
-        assertThat(insertMovie).isNotEmpty();
     }
 }
 
