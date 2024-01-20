@@ -2,6 +2,7 @@ package com.shima.todo_list.mapper;
 
 
 import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.spring.api.DBRider;
 import com.shima.todo_list.entity.TodoList;
 import org.junit.jupiter.api.Test;
@@ -58,6 +59,17 @@ class TodoListMapperTest {
     void 存在しないIDを指定する場合に空の情報を獲得すること() {
         Optional<TodoList> todoLists = todoListMapper.findById(5);
         assertThat(todoLists).isEmpty();
+    }
+
+    @Test
+    @DataSet(value = "datasets/todolists.yml")
+    @ExpectedDataSet(value = "datasets/insert_todolists.yml", ignoreCols = "id")
+
+    //CREATE機能のDBテスト(DBRider)
+    @Transactional
+    void 新規のタスクを登録すること() {
+        TodoList todoList = new TodoList("承認", LocalDate.of(2023, 12, 10), null, null);
+        todoListMapper.insert(todoList);
     }
 }
 
