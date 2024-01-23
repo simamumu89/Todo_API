@@ -3,7 +3,7 @@ package com.shima.todo_list.entity;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class TodoList {
+public class Todo {
 
     private int id;
     private String name;
@@ -14,7 +14,7 @@ public class TodoList {
 
     //GET(全件取得と指定ID）のConstructor
 
-    public TodoList(int id, String name, LocalDate startDate, LocalDate scheduledEndDate, LocalDate actualEndDate) {
+    public Todo(int id, String name, LocalDate startDate, LocalDate scheduledEndDate, LocalDate actualEndDate) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
@@ -24,7 +24,7 @@ public class TodoList {
     }
 
     //Post(新規登録処理）のConstructor
-    public TodoList(String name, LocalDate startDate, LocalDate scheduledEndDate, LocalDate actualEndDate) {
+    public Todo(String name, LocalDate startDate, LocalDate scheduledEndDate, LocalDate actualEndDate) {
         this.name = name;
         this.startDate = startDate;
         this.scheduledEndDate = scheduledEndDate;
@@ -32,7 +32,7 @@ public class TodoList {
     }
 
     //PATCH(既存DBの更新)のUpdateResponseのConstructor
-    public TodoList(int id, LocalDate scheduledEndDate, LocalDate actualEndDate) {
+    public Todo(int id, LocalDate scheduledEndDate, LocalDate actualEndDate) {
         this.id = id;
         this.scheduledEndDate = scheduledEndDate;
         this.actualEndDate = actualEndDate;
@@ -62,7 +62,7 @@ public class TodoList {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TodoList todoList = (TodoList) o;
+        Todo todoList = (Todo) o;
         return id == todoList.id && Objects.equals(name, todoList.name) && Objects.equals(startDate, todoList.startDate) && Objects.equals(scheduledEndDate, todoList.scheduledEndDate) && Objects.equals(actualEndDate, todoList.actualEndDate);
     }
 

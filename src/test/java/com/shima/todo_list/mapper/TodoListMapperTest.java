@@ -4,7 +4,7 @@ package com.shima.todo_list.mapper;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.spring.api.DBRider;
-import com.shima.todo_list.entity.TodoList;
+import com.shima.todo_list.entity.Todo;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TodoListMapperTest {
 
     @Autowired
-    TodoListMapper todoListMapper;
+    TodoMapper todoListMapper;
 
 
     //READ機能のDBテスト(全件取得)
@@ -31,14 +31,14 @@ class TodoListMapperTest {
     @DataSet(value = "datasets/todolists.yml")
     @Transactional
     void すべてのタスクが取得できること() {
-        List<TodoList> todoLists = todoListMapper.findAll();
+        List<Todo> todoLists = todoListMapper.findAll();
         assertThat(todoLists)
                 .hasSize(4)
                 .contains(
-                        new TodoList(1, "構想", LocalDate.of(2023, 12, 6), null, null),
-                        new TodoList(2, "API作成", LocalDate.of(2023, 12, 7), null, null),
-                        new TodoList(3, "テスト", LocalDate.of(2023, 12, 8), null, null),
-                        new TodoList(4, "リリース", LocalDate.of(2023, 12, 9), null, null)
+                        new Todo(1, "構想", LocalDate.of(2023, 12, 6), null, null),
+                        new Todo(2, "API作成", LocalDate.of(2023, 12, 7), null, null),
+                        new Todo(3, "テスト", LocalDate.of(2023, 12, 8), null, null),
+                        new Todo(4, "リリース", LocalDate.of(2023, 12, 9), null, null)
                 );
     }
 
@@ -48,8 +48,8 @@ class TodoListMapperTest {
     //READ機能のDBテスト(指定したID)
     @Transactional
     void 指定したIDのタスク情報を獲得すること() {
-        Optional<TodoList> todoLists = todoListMapper.findById(1);
-        assertThat(todoLists).contains(new TodoList(1, "構想", LocalDate.of(2023, 12, 6), null, null));
+        Optional<Todo> todoLists = todoListMapper.findById(1);
+        assertThat(todoLists).contains(new Todo(1, "構想", LocalDate.of(2023, 12, 6), null, null));
     }
 
     @Test
@@ -57,7 +57,7 @@ class TodoListMapperTest {
     //READ機能のDBテスト(指定したIDが存在しない場合)
     @Transactional
     void 存在しないIDを指定する場合に空の情報を獲得すること() {
-        Optional<TodoList> todoLists = todoListMapper.findById(5);
+        Optional<Todo> todoLists = todoListMapper.findById(5);
         assertThat(todoLists).isEmpty();
     }
 
@@ -68,7 +68,7 @@ class TodoListMapperTest {
     //CREATE機能のDBテスト(DBRider)
     @Transactional
     void 新規のタスクを登録すること() {
-        TodoList todoList = new TodoList("承認", LocalDate.of(2023, 12, 10), null, null);
+        Todo todoList = new Todo("承認", LocalDate.of(2023, 12, 10), null, null);
         todoListMapper.insert(todoList);
     }
 }
