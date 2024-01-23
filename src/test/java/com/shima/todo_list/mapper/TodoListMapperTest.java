@@ -31,8 +31,8 @@ class TodoListMapperTest {
     @DataSet(value = "datasets/todolists.yml")
     @Transactional
     void すべてのタスクが取得できること() {
-        List<Todo> todoLists = todoListMapper.findAll();
-        assertThat(todoLists)
+        List<Todo> todoList = todoListMapper.findAll();
+        assertThat(todoList)
                 .hasSize(4)
                 .contains(
                         new Todo(1, "構想", LocalDate.of(2023, 12, 6), null, null),
@@ -57,8 +57,8 @@ class TodoListMapperTest {
     //READ機能のDBテスト(指定したIDが存在しない場合)
     @Transactional
     void 存在しないIDを指定する場合に空の情報を獲得すること() {
-        Optional<Todo> todoLists = todoListMapper.findById(5);
-        assertThat(todoLists).isEmpty();
+        Optional<Todo> todo = todoListMapper.findById(5);
+        assertThat(todo).isEmpty();
     }
 
     @Test
@@ -68,8 +68,8 @@ class TodoListMapperTest {
     //CREATE機能のDBテスト(DBRider)
     @Transactional
     void 新規のタスクを登録すること() {
-        Todo todoList = new Todo("承認", LocalDate.of(2023, 12, 10), null, null);
-        todoListMapper.insert(todoList);
+        Todo todo = new Todo("承認", LocalDate.of(2023, 12, 10), null, null);
+        todoListMapper.insert(todo);
     }
 }
 

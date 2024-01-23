@@ -27,15 +27,15 @@ public class TodoListController {
 
     private final TodoService todoService;
 
-    public TodoListController(TodoService todoListService) {
-        this.todoService = todoListService;
+    public TodoListController(TodoService todoService) {
+        this.todoService = todoService;
     }
 
 
     @GetMapping("/todo_lists")
     public List<Todo> getTodoList() {
-        List<Todo> todoLists = todoService.getTodoList();
-        return todoLists;
+        List<Todo> todoList = todoService.getTodoList();
+        return todoList;
     }
 
     //GET
@@ -49,8 +49,8 @@ public class TodoListController {
     //新規登録(ID追加）
     @PostMapping("/todo_lists")
     public ResponseEntity<CreateResponse> createTodoList(@RequestBody @Valid CreateRequest createRequest, UriComponentsBuilder uriComponentsBuilder) {
-        Todo todoList = todoService.insert(createRequest.getName(), createRequest.getStartDate(), createRequest.getScheduledEndDate(), createRequest.getActualEndDate());
-        URI uri = uriComponentsBuilder.path("/todo_lists/{id}").buildAndExpand(todoList.getId()).toUri();
+        Todo todo = todoService.insert(createRequest.getName(), createRequest.getStartDate(), createRequest.getScheduledEndDate(), createRequest.getActualEndDate());
+        URI uri = uriComponentsBuilder.path("/todo_lists/{id}").buildAndExpand(todo.getId()).toUri();
         return ResponseEntity.created(uri).body(new CreateResponse("Add new task"));
     }
 
