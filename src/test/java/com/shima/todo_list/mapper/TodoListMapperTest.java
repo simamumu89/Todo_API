@@ -75,10 +75,11 @@ class TodoListMapperTest {
     @Test
     @DataSet(value = "datasets/todolists.yml")
     @ExpectedDataSet(value = "datasets/update_todolists.yml")
+
     //UPDATE機能のDBテスト
     @Transactional
     public void 存在するタスクを更新すること() {
-        Todo todo = new Todo(1, "設計", LocalDate.of(2023, 12, 7), null, null);
+        Todo todo = new Todo(1, "構想", LocalDate.of(2023, 12, 6), LocalDate.of(2023, 12, 7), LocalDate.of(2023, 12, 8));
         todoListMapper.update(todo);
     }
 
