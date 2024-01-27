@@ -1,7 +1,7 @@
 todo_lists:
   - id: 1
-    name: "構想"
-    start_date: '2023-12-06'
+    name: "設計"
+    start_date: '2023-12-07'
     scheduled_end_date: null
     actual_end_date: null
   - id: 2
@@ -19,4 +19,3 @@ todo_lists:
     start_date: '2023-12-09'
     scheduled_end_date: null
     actual_end_date: null
-
