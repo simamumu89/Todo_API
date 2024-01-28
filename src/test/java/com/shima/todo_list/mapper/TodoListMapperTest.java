@@ -79,7 +79,7 @@ class TodoListMapperTest {
     //UPDATE機能のDBテスト
     @Transactional
     public void 存在するタスクを更新すること() {
-        Todo todo = new Todo(1, "構想", LocalDate.of(2023, 12, 6), LocalDate.of(2023, 12, 7), LocalDate.of(2023, 12, 8));
+        Todo todo = new Todo(1, "設計", LocalDate.of(2023, 12, 6), LocalDate.of(2023, 12, 8), LocalDate.of(2023, 12, 9));
         todoListMapper.update(todo);
     }
 
