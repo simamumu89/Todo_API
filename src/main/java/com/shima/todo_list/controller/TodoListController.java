@@ -58,7 +58,7 @@ public class TodoListController {
     //既存DBの情報を更新　Validation追加
     @PatchMapping("/todo_lists/{id}")
     public ResponseEntity<UpdateResponse> updateTodoList(@PathVariable int id, @RequestBody UpdateRequest updateRequest) {
-        todoService.update(id, updateRequest.getScheduledEndDate(), updateRequest.getActualEndDate());
+        todoService.update(id, updateRequest.getName(), updateRequest.getScheduledEndDate(), updateRequest.getActualEndDate());
         UpdateResponse updateResponse = new UpdateResponse("Update completed!");
         return ResponseEntity.ok(updateResponse);
     }

@@ -39,7 +39,7 @@ public interface TodoMapper {
 
 
     //PATCH (既存DBの部分更新）
-    @Update("UPDATE todo_lists SET scheduled_end_date = #{scheduledEndDate}, actual_end_date = #{actualEndDate} WHERE id = #{id}")
+    @Update("UPDATE todo_lists SET name = #{name}, scheduled_end_date = #{scheduledEndDate}, actual_end_date = #{actualEndDate} WHERE id = #{id}")
     void update(Todo todoList);
 
     //DELETE(指定したidを削除）

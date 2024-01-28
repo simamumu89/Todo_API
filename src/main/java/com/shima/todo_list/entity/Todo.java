@@ -32,8 +32,9 @@ public class Todo {
     }
 
     //PATCH(既存DBの更新)のUpdateResponseのConstructor
-    public Todo(int id, LocalDate scheduledEndDate, LocalDate actualEndDate) {
+    public Todo(int id, String name, LocalDate scheduledEndDate, LocalDate actualEndDate) {
         this.id = id;
+        this.name = name;
         this.scheduledEndDate = scheduledEndDate;
         this.actualEndDate = actualEndDate;
     }

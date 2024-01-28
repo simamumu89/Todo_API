@@ -71,6 +71,27 @@ class TodoListMapperTest {
         Todo todo = new Todo("承認", LocalDate.of(2023, 12, 10), null, null);
         todoListMapper.insert(todo);
     }
+
+    @Test
+    @DataSet(value = "datasets/todolists.yml")
+    @ExpectedDataSet(value = "datasets/update_todolists.yml")
+
+    //UPDATE機能のDBテスト
+    @Transactional
+    public void 存在するタスクを更新すること() {
+        Todo todo = new Todo(1, "設計", LocalDate.of(2023, 12, 6), LocalDate.of(2023, 12, 8), LocalDate.of(2023, 12, 9));
+        todoListMapper.update(todo);
+    }
+
+    @Test
+    @DataSet(value = "datasets/todolists.yml")
+    @ExpectedDataSet(value = "datasets/todolists.yml")
+
+    @Transactional
+    public void 存在しないidでタスクを更新処理した場合はテーブルのレコードは更新されないこと() {
+        Todo todo = new Todo(99, "詳細設計", LocalDate.of(2023, 12, 4), null, null);
+        todoListMapper.update(todo);
+    }
 }
 
 

@@ -39,11 +39,11 @@ public class TodoService {
     }
 
     //PATCH(既存DBの部分更新）
-    public void update(int id, LocalDate scheduledEndDate, LocalDate actualEndDate) {
+    public void update(int id, String name, LocalDate scheduledEndDate, LocalDate actualEndDate) {
         //指定したIDを返す　
         todoMapper.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException("task not found"));
-        Todo todo = new Todo(id, scheduledEndDate, actualEndDate);
+        Todo todo = new Todo(id, name, scheduledEndDate, actualEndDate);
         todoMapper.update(todo);
     }
 
