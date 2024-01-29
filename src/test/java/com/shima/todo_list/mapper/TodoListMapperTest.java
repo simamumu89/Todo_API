@@ -92,6 +92,23 @@ class TodoListMapperTest {
         Todo todo = new Todo(99, "詳細設計", LocalDate.of(2023, 12, 4), null, null);
         todoListMapper.update(todo);
     }
+
+    //DELETE機能のDBテスト
+    @Test
+    @DataSet(value = "datasets/todolists.yml")
+    @ExpectedDataSet(value = "datasets/delete_todolists.yml")
+    @Transactional
+    public void 存在するタスク情報を削除すること() {
+        todoListMapper.delete(3);
+    }
+
+    @Test
+    @DataSet(value = "datasets/todolists.yml")
+    @ExpectedDataSet(value = "datasets/todolists.yml")
+    @Transactional
+    public void 存在しないidのタスク情報を指定した場合は削除されないこと() {
+        todoListMapper.delete(99);
+    }
 }
 
 
