@@ -17,7 +17,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-public class TodoListSreviceTest {
+public class TodoListServiceTest {
 
     @InjectMocks
     TodoService todoListService;
