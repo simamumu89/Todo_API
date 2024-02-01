@@ -20,8 +20,8 @@ public class TodoService {
 
     //GET(全件取得)
     public List<Todo> getTodoList() {
-        List<Todo> todoList = todoMapper.findAll();
-        return todoList;
+        List<Todo> todo = todoMapper.findAll();
+        return todo;
     }
 
     //GET(指定id)と例外処理
@@ -53,4 +53,5 @@ public class TodoService {
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
         todoMapper.delete(id);
     }
+
 }
