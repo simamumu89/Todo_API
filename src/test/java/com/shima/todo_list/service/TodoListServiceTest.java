@@ -1,6 +1,7 @@
 package com.shima.todo_list.service;
 
 import com.shima.todo_list.entity.Todo;
+import com.shima.todo_list.exception.TaskNotFoundException;
 import com.shima.todo_list.mapper.TodoMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
@@ -48,4 +50,15 @@ public class TodoListServiceTest {
         assertThat(actual).isEqualTo(new Todo(1, "構想", LocalDate.of(2023, 12, 6), null, null));
         verify(todoListMapper).findById(1);
     }
+
+    @Test
+    public void 存在しないIDを指定したときに例外処理が動作すること() throws
+            TaskNotFoundException {
+        doReturn(Optional.empty()).when(todoListMapper).findById(99);
+        assertThrows(TaskNotFoundException.class, () -> {
+            todoListService.findById(99);
+        });
+        verify(todoListMapper).findById(99);
+    }
+
 }
