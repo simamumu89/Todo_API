@@ -69,9 +69,8 @@ public class TodoListServiceTest {
     public void 存在しないタスク情報を新規登録すること() {
         Todo todo = new Todo("詳細", LocalDate.of(2023, 12, 10), null, null);
         doNothing().when(todoListMapper).insert(todo);
-        Todo actual = todoListService.insert(todo);
+        Todo actual = todoListService.insert("詳細", LocalDate.of(2023, 12, 10), null, null);
         assertThat(actual).isEqualTo(new Todo("詳細", LocalDate.of(2023, 12, 10), null, null));
         verify(todoListMapper).insert(todo);
     }
-
 }
