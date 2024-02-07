@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
@@ -27,7 +28,7 @@ public class TodoListServiceTest {
     @Mock
     TodoMapper todoListMapper;
 
-    //GETのテストコード
+    //READ機能のテスト(全件取得)
     @Test
     void findAllで存在するタスクを全部取得すること() {
         List<Todo> todo = List.of(
@@ -43,6 +44,7 @@ public class TodoListServiceTest {
         verify(todoListMapper).findAll();
     }
 
+    //READ機能のテスト(指定id)
     @Test
     public void 存在するIDを指定したときに正常にタスクが返されること() {
         doReturn(Optional.of(new Todo(1, "構想", LocalDate.of(2023, 12, 6), null, null))).when(todoListMapper).findById(1);
@@ -51,6 +53,7 @@ public class TodoListServiceTest {
         verify(todoListMapper).findById(1);
     }
 
+    //READ機能のテスト(指定idの例外)
     @Test
     public void 存在しないIDを指定したときに例外処理が動作すること() throws
             TaskNotFoundException {
@@ -61,4 +64,13 @@ public class TodoListServiceTest {
         verify(todoListMapper).findById(99);
     }
 
+    //CREATE機能のテスト
+    @Test
+    public void 存在しないタスク情報を新規登録すること() {
+        Todo todo = new Todo("詳細", LocalDate.of(2023, 12, 10), null, null);
+        doNothing().when(todoListMapper).insert(todo);
+        Todo actual = todoListService.insert("詳細", LocalDate.of(2023, 12, 10), null, null);
+        assertThat(actual).isEqualTo(new Todo("詳細", LocalDate.of(2023, 12, 10), null, null));
+        verify(todoListMapper).insert(todo);
+    }
 }

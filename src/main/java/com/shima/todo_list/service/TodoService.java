@@ -53,5 +53,4 @@ public class TodoService {
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
         todoMapper.delete(id);
     }
-
 }
