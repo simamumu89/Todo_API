@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -72,5 +73,24 @@ public class TodoListServiceTest {
         Todo actual = todoListService.insert("詳細", LocalDate.of(2023, 12, 10), null, null);
         assertThat(actual).isEqualTo(new Todo("詳細", LocalDate.of(2023, 12, 10), null, null));
         verify(todoListMapper).insert(todo);
+    }
+
+    //UPDATE機能のテスト
+    @Test
+    public void 存在するIDのタスク情報を更新すること() {
+        doReturn(Optional.of(new Todo(3, "テスト", LocalDate.of(2023, 12, 8), null, null))).when(todoListMapper).findById(3);
+        todoListService.update(3, "テストチェック", LocalDate.of(2023, 12, 9), LocalDate.of(2023, 12, 10));
+        verify(todoListMapper).findById(3);
+        verify(todoListMapper).update(new Todo(3, "テストチェック", LocalDate.of(2023, 12, 9), LocalDate.of(2023, 12, 10)));
+    }
+
+    @Test
+    public void 指定したIDが存在しないとき例外処理が動作すること() {
+        doReturn(Optional.empty()).when(todoListMapper).findById(99);
+        assertThatThrownBy(() -> todoListService.update(99, "テストチェック", LocalDate.of(2023, 12, 9), LocalDate.of(2023, 12, 10)))
+                .isInstanceOfSatisfying(TaskNotFoundException.class, e -> {
+                    assertThat(e.getMessage()).isEqualTo("task not found");
+                });
+        verify(todoListMapper).findById(99);
     }
 }
