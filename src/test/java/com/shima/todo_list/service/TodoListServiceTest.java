@@ -18,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -113,5 +114,6 @@ public class TodoListServiceTest {
         ).isInstanceOfSatisfying(
                 TaskNotFoundException.class, e -> assertThat(e.getMessage()).isEqualTo("task not found"));
         verify(todoListMapper).findById(99);
+        verify(todoListMapper, never()).delete(99);
     }
 }
