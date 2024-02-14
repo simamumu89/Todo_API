@@ -99,9 +99,9 @@ public class TodoListServiceTest {
     @Test
     public void 指定したIDのデータが削除できること() {
         doReturn(Optional.of(new Todo(2, "API作成", LocalDate.of(2023, 12, 7), null, null))).when(todoListMapper).findById(2);
-        todoListService.findById(2);
+        todoListService.delete(2);
         verify(todoListMapper).findById(2);
-        verify(todoListMapper).findById(2);
+        verify(todoListMapper).delete(2);
 
     }
 
@@ -110,9 +110,9 @@ public class TodoListServiceTest {
         doReturn(Optional.empty()).when(todoListMapper).findById(99);
 
         assertThatThrownBy(
-                () -> todoListService.findById(99)
+                () -> todoListService.delete(99)
         ).isInstanceOfSatisfying(
-                TaskNotFoundException.class, e -> assertThat(e.getMessage()).isEqualTo("task not found"));
+                TaskNotFoundException.class, e -> assertThat(e.getMessage()).isEqualTo("Task not found"));
         verify(todoListMapper).findById(99);
         verify(todoListMapper, never()).delete(99);
     }
