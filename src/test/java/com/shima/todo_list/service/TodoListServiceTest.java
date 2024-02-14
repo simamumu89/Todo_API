@@ -18,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -92,5 +93,27 @@ public class TodoListServiceTest {
                     assertThat(e.getMessage()).isEqualTo("task not found");
                 });
         verify(todoListMapper).findById(99);
+    }
+
+    //DELETE機能のテスト
+    @Test
+    public void 指定したIDのデータが削除できること() {
+        doReturn(Optional.of(new Todo(2, "API作成", LocalDate.of(2023, 12, 7), null, null))).when(todoListMapper).findById(2);
+        todoListService.delete(2);
+        verify(todoListMapper).findById(2);
+        verify(todoListMapper).delete(2);
+
+    }
+
+    @Test
+    public void 存在しないIDのデータを削除したときに例外処理が動作こと() {
+        doReturn(Optional.empty()).when(todoListMapper).findById(99);
+
+        assertThatThrownBy(
+                () -> todoListService.delete(99)
+        ).isInstanceOfSatisfying(
+                TaskNotFoundException.class, e -> assertThat(e.getMessage()).isEqualTo("Task not found"));
+        verify(todoListMapper).findById(99);
+        verify(todoListMapper, never()).delete(99);
     }
 }
