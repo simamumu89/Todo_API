@@ -67,6 +67,35 @@ public class TodoListRestApiIntegrationTest {
                 ]
                 """, response, JSONCompareMode.STRICT);
     }
+
+    @Test
+    @DataSet(value = "datasets/todolists.yml")
+    @Transactional
+    public void 指定したIDでタスク情報をステータスコード200を取得すること() throws Exception {
+        String response = mockMvc.perform(MockMvcRequestBuilders.get("/todo_lists/2"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+        JSONAssert.assertEquals("""
+                           
+                {
+                  "id": 2,
+                  "name": "API作成",
+                  "startDate": "2023-12-07",
+                  "scheduledEndDate": null,
+                  "actualEndDate": null
+                }
+                                
+                """, response, JSONCompareMode.STRICT);
+    }
+
+    @Test
+    @DataSet(value = "datasets/todolists.yml")
+    @Transactional
+    public void 存在しないIDを指定するとステータスコード404のエラーメッセージを返すこと() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/todo_lists/99"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andReturn().getResponse().getErrorMessage();
+    }
 }
 
 
