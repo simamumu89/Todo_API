@@ -115,8 +115,8 @@ public class TodoListRestApiIntegrationTest {
         Todo todo = new Todo("承認", LocalDate.of(2023, 12, 10), null, null);
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        String jason = mapper.writeValueAsString(todo);
-        mockMvc.perform(MockMvcRequestBuilders.post("/todo_lists").contentType(MediaType.APPLICATION_JSON).content(jason))
+        String json = mapper.writeValueAsString(todo);
+        mockMvc.perform(MockMvcRequestBuilders.post("/todo_lists").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
     }
 }
