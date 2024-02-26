@@ -112,7 +112,7 @@ public class TodoListRestApiIntegrationTest {
     @ExpectedDataSet(value = "datasets/insert_todolists.yml", ignoreCols = "id")
     @Transactional
     public void 新規のタスク情報がDBに登録されるとステータスコード201が返ってくること() throws Exception {
-        Todo todo = new Todo("承認", LocalDate.of(2023, 12, 10), null, null);
+        Todo todo = new Todo(5, "承認", LocalDate.of(2023, 12, 10), null, null);
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         String json = mapper.writeValueAsString(todo);
