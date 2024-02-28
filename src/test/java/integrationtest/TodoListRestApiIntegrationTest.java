@@ -115,13 +115,21 @@ public class TodoListRestApiIntegrationTest {
         Todo todo = new Todo(5, "承認", LocalDate.of(2023, 12, 10), null, null);
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        String json = mapper.writeValueAsString(todo);
+        String response = mapper.writeValueAsString(todo);
         mockMvc.perform(MockMvcRequestBuilders.post("/todo_lists")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json))
+                        .content(response))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.content().json(json));
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        JSONAssert.assertEquals("""
+                {
+                    "message": "Add new task"
+                }
+                            """, response, JSONCompareMode.STRICT);
+
     }
 }
+
 
 
