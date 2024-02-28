@@ -116,8 +116,11 @@ public class TodoListRestApiIntegrationTest {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         String json = mapper.writeValueAsString(todo);
-        mockMvc.perform(MockMvcRequestBuilders.post("/todo_lists").contentType(MediaType.APPLICATION_JSON).content(json))
-                .andExpect(MockMvcResultMatchers.status().isCreated());
+        mockMvc.perform(MockMvcRequestBuilders.post("/todo_lists")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().json(json));
     }
 }
 
