@@ -8,10 +8,8 @@ import com.github.database.rider.spring.api.DBRider;
 import com.shima.todo_list.TodoListApplication;
 import com.shima.todo_list.entity.Todo;
 import org.junit.jupiter.api.Test;
-import org.skyscreamer.jsonassert.Customization;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.skyscreamer.jsonassert.comparator.CustomComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -128,8 +126,7 @@ public class TodoListRestApiIntegrationTest {
                 {
                     "message": "Add new task"
                 }
-                            """, response, new CustomComparator(JSONCompareMode.STRICT,
-                new Customization("message", ((o1, o2) -> true))));
+                            """, response, JSONCompareMode.STRICT);
 
     }
 }
