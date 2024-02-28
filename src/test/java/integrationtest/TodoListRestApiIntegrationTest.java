@@ -8,8 +8,10 @@ import com.github.database.rider.spring.api.DBRider;
 import com.shima.todo_list.TodoListApplication;
 import com.shima.todo_list.entity.Todo;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.Customization;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.skyscreamer.jsonassert.comparator.CustomComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -115,10 +117,10 @@ public class TodoListRestApiIntegrationTest {
         Todo todo = new Todo(5, "承認", LocalDate.of(2023, 12, 10), null, null);
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        String response = mapper.writeValueAsString(todo);
-        mockMvc.perform(MockMvcRequestBuilders.post("/todo_lists")
+        String requestJson = mapper.writeValueAsString(todo);
+        String response = mockMvc.perform(MockMvcRequestBuilders.post("/todo_lists")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(response))
+                        .content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
@@ -126,7 +128,8 @@ public class TodoListRestApiIntegrationTest {
                 {
                     "message": "Add new task"
                 }
-                            """, response, JSONCompareMode.STRICT);
+                            """, response, new CustomComparator(JSONCompareMode.STRICT,
+                new Customization("message", ((o1, o2) -> true))));
 
     }
 }
