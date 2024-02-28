@@ -1,8 +1,12 @@
 package integrationtest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.spring.api.DBRider;
 import com.shima.todo_list.TodoListApplication;
+import com.shima.todo_list.entity.Todo;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
@@ -10,12 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 
 @SpringBootTest(classes = TodoListApplication.class)
 @AutoConfigureMockMvc
@@ -99,6 +105,31 @@ public class TodoListRestApiIntegrationTest {
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andReturn().getResponse().getErrorMessage();
     }
+
+    //Create機能のIntegrationTest
+    @Test
+    @DataSet(value = "datasets/todolists.yml")
+    @ExpectedDataSet(value = "datasets/insert_todolists.yml", ignoreCols = "id")
+    @Transactional
+    public void 新規のタスク情報がDBに登録されるとステータスコード201が返ってくること() throws Exception {
+        Todo todo = new Todo(5, "承認", LocalDate.of(2023, 12, 10), null, null);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        String requestJson = mapper.writeValueAsString(todo);
+        String response = mockMvc.perform(MockMvcRequestBuilders.post("/todo_lists")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        JSONAssert.assertEquals("""
+                {
+                    "message": "Add new task"
+                }
+                            """, response, JSONCompareMode.STRICT);
+
+    }
 }
+
 
 
