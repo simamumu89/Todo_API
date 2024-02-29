@@ -7,6 +7,7 @@ import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.spring.api.DBRider;
 import com.shima.todo_list.TodoListApplication;
 import com.shima.todo_list.entity.Todo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
@@ -153,6 +154,24 @@ public class TodoListRestApiIntegrationTest {
                     "message": "Update completed!"
                 }
                 """, response, JSONCompareMode.STRICT);
+    }
+
+    @Test
+    @DataSet(value = "datasets/todolists.yml")
+    @Transactional
+    public void 存在しないIDでタスク情報の更新処理をするとステータスコード404とエラーメッセージを取得すること() throws Exception {
+        Assertions.assertTrue(mockMvc.perform(MockMvcRequestBuilders.patch("/todo_lists/99")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "name": "設計",
+                                  "starDate": "2023-12-06",
+                                  "scheduledEndDate": "2023-12-08",
+                                  "actualEndDate": "2023-12-09"
+                                }
+                                """))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andReturn().getResponse().getContentAsString().contains("task not found"));
     }
 }
 
