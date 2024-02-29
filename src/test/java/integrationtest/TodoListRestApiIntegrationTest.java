@@ -129,7 +129,32 @@ public class TodoListRestApiIntegrationTest {
                             """, response, JSONCompareMode.STRICT);
 
     }
-}
 
+    //Update機能のIntegrationTest
+    @Test
+    @DataSet(value = "datasets/todolists.yml")
+    @ExpectedDataSet(value = "datasets/update_todolists.yml", ignoreCols = "id")
+    @Transactional
+    public void 指定したidにタスク情報を更新するとステータスコード200のメッセージを取得すること() throws Exception {
+        String response = mockMvc.perform(MockMvcRequestBuilders.patch("/todo_lists/{id}", 1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                                        
+                                {
+                                  "name": "設計",
+                                  "starDate": "2023-12-06",
+                                  "scheduledEndDate": "2023-12-08",
+                                  "actualEndDate": "2023-12-09"
+                                }
+                                """)).andExpect(MockMvcResultMatchers.status().isOk()).
+                andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        JSONAssert.assertEquals("""
+                {
+                    "message": "Update completed!"
+                }
+                """, response, JSONCompareMode.STRICT);
+    }
+}
 
 
