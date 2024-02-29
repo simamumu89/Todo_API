@@ -174,6 +174,24 @@ public class TodoListRestApiIntegrationTest {
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andReturn().getResponse().getContentAsString().contains("task not found"));
     }
+
+    //Delete機能のIntegrationTest
+    @Test
+    @DataSet(value = "datasets/todolists.yml")
+    @ExpectedDataSet(value = "datasets/delete_todolists.yml")
+    @Transactional
+    public void 存在するIDを削除しステータスコード200のメッセージを取得できること() throws Exception {
+        String response = mockMvc.perform(MockMvcRequestBuilders.delete("/todo_lists/{id}", 3))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        JSONAssert.assertEquals("""
+                {
+                    "message": "Task deleted"
+                }
+                            """, response, JSONCompareMode.STRICT);
+
+    }
 }
 
 
