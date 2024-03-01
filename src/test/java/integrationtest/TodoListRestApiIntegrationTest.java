@@ -1,5 +1,6 @@
 package integrationtest;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.github.database.rider.core.api.dataset.DataSet;
@@ -17,12 +18,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = TodoListApplication.class)
 @AutoConfigureMockMvc
@@ -190,7 +194,22 @@ public class TodoListRestApiIntegrationTest {
                     "message": "Task deleted"
                 }
                             """, response, JSONCompareMode.STRICT);
+    }
 
+    //Delete機能のIntegrationTest(例外処理)
+    @Test
+    @DataSet(value = "datasets/todolists.yml")
+    @Transactional
+    void 指定したIDが存在しない時にエラーメッセージが返されること() throws Exception {
+        MvcResult result =
+                mockMvc.perform(MockMvcRequestBuilders.delete("/todo_lists/99"))
+                        .andExpect(MockMvcResultMatchers.status().isNotFound())
+                        .andReturn();
+        String responseBody = result.getResponse().getContentAsString();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode responseJson = objectMapper.readTree(responseBody);
+        String errorMessage = responseJson.get("message").asText();
+        assertEquals("Task not found", errorMessage);
     }
 }
 
